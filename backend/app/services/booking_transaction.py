@@ -250,3 +250,112 @@ def hold_reserved_seat(
         if auto_commit:
             db.rollback()
         raise
+
+
+def book_general_admission(
+    db: Session,
+    user_id: int,
+    event_id: int,
+    ticket_type_id: int,
+    quantity: int = 1,
+    payment_method: str = "UPI",
+    discount_amount: Decimal = Decimal("0.00"),
+    auto_commit: bool = True,
+) -> Booking:
+    """Execute atomic booking of General Admission tickets using row-level locking."""
+    try:
+        if quantity < 1:
+            raise BookingTransactionError("Quantity must be at least 1")
+
+        # 1. Validate event
+        event = db.query(Event).filter(Event.id == event_id).one_or_none()
+        if not event:
+            raise EventNotBookableError(f"Event #{event_id} not found.")
+        if event.status != "PUBLISHED":
+            raise EventNotBookableError(f"Event #{event_id} is {event.status}; only PUBLISHED events can be booked.")
+        if event.seating_mode != "GENERAL_ADMISSION":
+            raise EventNotBookableError(f"Event #{event_id} is not configured for GENERAL_ADMISSION.")
+
+        # 2. Acquire exclusive lock on ticket type row and verify quota
+        ticket_type = (
+            db.query(TicketType)
+            .filter(TicketType.id == ticket_type_id, TicketType.event_id == event_id)
+            .with_for_update()
+            .one_or_none()
+        )
+        if not ticket_type or not ticket_type.is_active:
+            raise TicketCapacityExceededError(f"TicketType #{ticket_type_id} is inactive or not found for this event.")
+        if ticket_type.sold_count + quantity > ticket_type.capacity:
+            raise TicketCapacityExceededError(
+                f"Requested quantity ({quantity}) exceeds available capacity ({ticket_type.capacity - ticket_type.sold_count} remaining)."
+            )
+
+        # 3. Calculate amounts
+        subtotal = ticket_type.price * Decimal(quantity)
+        discount = max(Decimal("0.00"), discount_amount)
+        taxable = max(Decimal("0.00"), subtotal - discount)
+        tax = (taxable * Decimal("0.18")).quantize(Decimal("0.01"))
+        total = taxable + tax
+
+        # 4. Create Booking
+        booking_ref = f"EVH-TX-{uuid.uuid4().hex[:8].upper()}"
+        booking = Booking(
+            user_id=user_id,
+            event_id=event_id,
+            booking_reference=booking_ref,
+            status="CONFIRMED",
+            subtotal=subtotal,
+            discount_amount=discount,
+            tax_amount=tax,
+            total_amount=total,
+            expires_at=None,
+        )
+        db.add(booking)
+        db.flush()
+
+        # 5. Create Booking Item
+        item = BookingItem(
+            booking_id=booking.id,
+            ticket_type_id=ticket_type.id,
+            quantity=quantity,
+            unit_price=ticket_type.price,
+            subtotal=subtotal,
+        )
+        db.add(item)
+
+        # 6. Create simulated Payment
+        txn_ref = f"TXN-EVH-{uuid.uuid4().hex[:10].upper()}"
+        payment = Payment(
+            booking_id=booking.id,
+            transaction_reference=txn_ref,
+            amount=total,
+            payment_method=payment_method,
+            status="SUCCESS",
+            paid_at=func.now(),
+        )
+        db.add(payment)
+
+        # 7. Issue Tickets (quantity tickets, unassigned seat)
+        for _ in range(quantity):
+            tkt_code = f"EVH-TKT-{uuid.uuid4().hex[:8].upper()}"
+            qr_token = f"EVH-QR-{uuid.uuid4().hex[:16].upper()}"
+            ticket = Ticket(
+                booking_id=booking.id,
+                ticket_type_id=ticket_type.id,
+                event_seat_id=None,
+                ticket_code=tkt_code,
+                qr_token=qr_token,
+                status="ACTIVE",
+            )
+            db.add(ticket)
+
+        db.flush()
+        if auto_commit:
+            db.commit()
+            db.refresh(booking)
+
+        return booking
+    except Exception:
+        if auto_commit:
+            db.rollback()
+        raise

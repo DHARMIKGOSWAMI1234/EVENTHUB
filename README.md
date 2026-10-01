@@ -1,41 +1,56 @@
 # EVENTHUB — Event & Ticket Booking Management System
 
-EVENTHUB is an enterprise-grade, full-stack event management and ticket reservation platform designed with a primary focus on robust Database Management System (DBMS) principles, high-performance API design, and a modern reactive user experience.
+EVENTHUB is an enterprise-grade, full-stack event management and ticket reservation platform designed with a primary focus on robust Database Management System (DBMS) principles, high-performance API design, concurrency control, and a modern reactive user experience.
 
 ---
 
-## 1. What is EVENTHUB?
+## 1. Project Overview & Architecture
 
-EVENTHUB provides a unified platform connecting event organizers and attendees. It manages event lifecycle workflows, complex multi-tier ticket inventory, high-concurrency seat and ticket reservations, transaction processing, and analytical reporting.
+EVENTHUB connects event organizers and attendees through a clean, secure, multi-tier architecture:
 
-The system is built on relational database integrity, utilizing advanced PostgreSQL features such as foreign key constraints, atomic transactions, ACID guarantees, triggers, stored procedures, and optimized views.
+```text
+React 19 + TypeScript + Vite Frontend (Phase 6)
+                      ↓
+           FastAPI REST API Layer (Phase 5)
+                      ↓
+         API Routers & Dependencies (RBAC / JWT)
+                      ↓
+         Pydantic v2 Schemas (Validation & Safe DTOs)
+                      ↓
+             Domain Service Layer
+                      ↓
+      Authoritative Booking Transaction Service
+        (Row-Level Locking & SELECT FOR UPDATE)
+                      ↓
+            SQLAlchemy 2.0 ORM Engine
+                      ↓
+               PostgreSQL 18.6
+     (16 Tables • 5 Views • 4 Stored Functions • 18 Triggers)
+```
 
 ---
 
 ## 2. Technology Stack
 
 ### Database Layer
-- **PostgreSQL 18.6**: Primary relational database management system.
-- **psycopg (psycopg 3)**: High-performance Python PostgreSQL adapter.
+- **PostgreSQL 18.6**: Authoritative relational database management system.
+- **psycopg (psycopg 3)**: High-performance Python PostgreSQL DBAPI adapter.
 - **SQLAlchemy 2.0**: Next-generation Python SQL toolkit and Object Relational Mapper (ORM).
 - **Alembic**: Database schema migration and version control framework.
 
 ### Backend Layer
 - **Python 3.13+**: Core runtime.
-- **FastAPI**: Modern, high-performance web framework for building RESTful APIs.
-- **Pydantic v2 & Pydantic-Settings**: Data validation, serialization, and environment configuration management.
-- **Uvicorn**: Lightning-fast ASGI web server implementation.
+- **FastAPI 0.115+**: Modern, asynchronous web framework for building secure RESTful APIs.
+- **Pydantic v2 & Pydantic-Settings**: Schema validation, serialization, and environment configuration.
+- **PyJWT**: Secure JSON Web Token creation, decoding, and cryptographic validation.
+- **Uvicorn**: High-throughput ASGI server implementation.
 - **Pytest & HTTPX**: Automated test execution and API integration testing.
 
-### Frontend Layer
+### Frontend Layer (Phase 6 Placeholder)
 - **React 19**: Modern component-based user interface library.
 - **TypeScript**: Static typing for front-end safety and maintainability.
 - **Vite**: Next-generation front-end build tool and dev server.
 - **Tailwind CSS**: Utility-first CSS framework for clean, responsive design.
-
-### Development & Version Control
-- **Git & GitHub**: Version control and collaborative source code management.
-- **Antigravity IDE**: AI-assisted development environment.
 
 ---
 
@@ -44,7 +59,7 @@ The system is built on relational database integrity, utilizing advanced Postgre
 ```text
 EVENTHUB/
 ├── database/
-│   ├── migrations/       # Alembic migrations, versions, and env.py
+│   ├── migrations/       # Alembic migrations (Phases 2 & 4)
 │   ├── schema/           # Relational schema DDL definitions
 │   ├── seeds/            # Initial and mock data insertion scripts
 │   ├── views/            # Analytical and reporting database views
@@ -55,26 +70,25 @@ EVENTHUB/
 │
 ├── backend/
 │   ├── app/
-│   │   ├── api/          # API route definitions and endpoint versioning (v1)
-│   │   ├── core/         # Configuration, settings, and application constants
+│   │   ├── api/          # API dependencies and router definitions
+│   │   │   ├── deps.py   # DB injection, JWT parsing, and RBAC guards
+│   │   │   └── routers/  # 16 domain routers (Auth, Events, Bookings, etc.)
+│   │   ├── core/         # Settings, password hashing, JWT, and exceptions
 │   │   ├── db/           # Database engine, session maker, and DeclarativeBase
-│   │   ├── models/       # SQLAlchemy ORM entity models
-│   │   ├── schemas/      # Pydantic schemas for data validation
-│   │   ├── services/     # Core domain business logic and services
+│   │   ├── models/       # 16 SQLAlchemy ORM entity models
+│   │   ├── schemas/      # Pydantic v2 request/response schemas
+│   │   ├── services/     # Business logic & authoritative booking transaction service
 │   │   └── main.py       # FastAPI application entrypoint and middleware
-│   ├── tests/            # Test suites (pytest)
+│   ├── tests/            # Pytest test suite (97 tests passing)
+│   │   └── api/          # Comprehensive API integration tests
 │   ├── alembic.ini       # Alembic migration configuration
 │   └── requirements.txt  # Python package dependencies
 │
-├── frontend/
-│   ├── public/           # Static assets
-│   ├── src/              # React components, pages, and styles
-│   ├── package.json      # Node.js project manifest and scripts
-│   ├── tsconfig.json     # TypeScript compiler configuration
-│   └── vite.config.ts    # Vite bundler configuration
-│
-├── scripts/              # Utility scripts for maintenance and deployment
-├── docs/                 # Architecture, API, and database documentation
+├── frontend/             # React + TypeScript + Vite frontend
+├── docs/                 # API, architecture, and database documentation
+│   ├── api.md            # Complete REST API specification
+│   ├── architecture.md   # Architectural design documents
+│   └── database.md       # Comprehensive DBMS documentation
 ├── .env.example          # Environment variable template
 ├── .gitignore            # Git exclusion rules
 └── README.md             # Project documentation
@@ -84,8 +98,8 @@ EVENTHUB/
 
 ## 4. PostgreSQL Database Setup
 
-> **IMPORTANT REQUIREMENT:**
-> The PostgreSQL database named **`eventhub`** must already exist before executing database-dependent operations or running schema migrations in subsequent phases.
+> **REQUIREMENT:**
+> The PostgreSQL database named **`eventhub`** must exist and be accessible.
 
 ### Database Connection Parameters
 - **Host**: `localhost`
@@ -96,185 +110,128 @@ EVENTHUB/
 
 Ensure the PostgreSQL service is active:
 ```powershell
-# Windows PowerShell check
 Get-Service postgresql*
-```
-
-If creating the database manually on a fresh installation:
-```sql
-CREATE DATABASE eventhub;
 ```
 
 ---
 
-## 5. Backend Setup
+## 5. Backend Setup & Configuration
 
 ### Prerequisites
 - Python 3.11+ installed and available on PATH.
 
 ### Installation Steps
-1. Open terminal and navigate to `backend`:
+1. Navigate to `backend`:
    ```bash
    cd backend
    ```
-2. Create a virtual environment:
-   ```bash
-   python -m venv .venv
-   ```
-3. Activate the virtual environment:
+2. Activate virtual environment:
    - **Windows (PowerShell)**:
      ```powershell
      .venv\Scripts\Activate.ps1
-     ```
-   - **Windows (Command Prompt)**:
-     ```cmd
-     .venv\Scripts\activate.bat
      ```
    - **Linux / macOS**:
      ```bash
      source .venv/bin/activate
      ```
-4. Install backend dependencies:
+3. Install backend dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
----
-
-## 6. Frontend Setup
-
-### Prerequisites
-- Node.js (v18 or higher; v24 recommended) and npm.
-
-### Installation Steps
-1. Navigate to `frontend`:
-   ```bash
-   cd frontend
-   ```
-2. Install npm dependencies:
-   ```bash
-   npm install
-   ```
+### Environment Configuration
+Copy `.env.example` in the project root to `.env`:
+```ini
+DATABASE_URL=postgresql+psycopg://postgres:1234@localhost:5432/eventhub
+APP_ENV=development
+ENVIRONMENT=development
+JWT_SECRET_KEY=eventhub-super-secret-jwt-key-change-in-production-2026
+JWT_ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=60
+REFRESH_TOKEN_EXPIRE_DAYS=7
+CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173,http://localhost:3000
+```
 
 ---
 
-## 7. Environment Variables
-
-EVENTHUB uses environment variables for database connections and runtime flags.
-
-1. Copy `.env.example` in the project root to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-2. Configure your local parameters inside `.env`:
-   ```ini
-   DATABASE_URL=postgresql+psycopg://postgres:YOUR_PASSWORD@localhost:5432/eventhub
-   ENVIRONMENT=development
-   HOST=0.0.0.0
-   PORT=8000
-   API_V1_STR=/api/v1
-   PROJECT_NAME=EVENTHUB
-   ```
-
-> **Security Note**: Never commit `.env` or plain-text credentials to Git. The `.gitignore` file is pre-configured to ignore all `.env` files except `.env.example`.
-
----
-
-## 8. How to Run the Backend
+## 6. Running FastAPI Server
 
 With the virtual environment activated from the `backend` directory:
 ```bash
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### Accessing the API:
-- **Health Check**: [http://localhost:8000/health](http://localhost:8000/health)
+### Accessing the API & Documentation:
+- **Root Health Check**: [http://localhost:8000/health](http://localhost:8000/health)
+- **API v1 Health Check**: [http://localhost:8000/api/v1/health](http://localhost:8000/api/v1/health)
 - **Interactive Swagger Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
 - **ReDoc Documentation**: [http://localhost:8000/redoc](http://localhost:8000/redoc)
-
-### Running Backend Tests:
-```bash
-pytest
-```
+- **OpenAPI JSON**: [http://localhost:8000/api/v1/openapi.json](http://localhost:8000/api/v1/openapi.json)
 
 ---
 
-## 9. How to Run the Frontend
+## 7. API Architecture & Domains
 
-From the `frontend` directory:
-```bash
-npm run dev
-```
+The REST API exposes 64 endpoints organized cleanly across 16 domain routers:
 
-The application will start at:
-- **Local Application URL**: [http://localhost:5173](http://localhost:5173)
-
-### Building for Production:
-```bash
-npm run build
-```
+1. **Authentication (`/api/v1/auth`)**: Registration, login, token refresh, `/me` profile, and stateless logout.
+2. **Users (`/api/v1/users`)**: Profile retrieval, profile updates, and safe public inspection.
+3. **Categories (`/api/v1/categories`)**: Public event category catalog.
+4. **Venues (`/api/v1/venues`)**: Physical venue specs and seat maps.
+5. **Events (`/api/v1/events`)**: Published event search, filtering, detail, real-time availability, and public seat maps.
+6. **Ticket Types (`/api/v1/ticket-types`)**: Multi-tier pricing and tier definitions.
+7. **Seats (`/api/v1/seats`)**: Safe seat availability endpoints.
+8. **Bookings (`/api/v1/bookings`)**: Customer ticket booking using Phase 4 row-locking transaction logic, booking cancellation, and hold expiration.
+9. **Payments (`/api/v1/payments`, `/api/v1/bookings/{id}/payment`)**: Simulated payment gateway callbacks (`SUCCESS` / `FAILED`).
+10. **Tickets (`/api/v1/tickets`)**: Issued digital tickets, QR verification tokens, and gate scanner validation (`ACTIVE` -> `USED`).
+11. **Reviews (`/api/v1/reviews`, `/api/v1/events/{id}/reviews`)**: Verified reviews (ratings 1–5, unique per user/event).
+12. **Favorites (`/api/v1/favorites`)**: Customer event bookmarking.
+13. **Notifications (`/api/v1/notifications`)**: In-app notifications and read-state management.
+14. **Organizer (`/api/v1/organizer`)**: Organization profile, event lifecycle (`DRAFT` -> `PUBLISHED` -> `CANCELLED`), ticket tier management, and sales analytics.
+15. **Admin (`/api/v1/admin`)**: User roles and status governance, catalog curation, system audit trail, and expired hold maintenance.
+16. **Analytics (`/api/v1/analytics`)**: Read-only reporting backed directly by PostgreSQL views.
 
 ---
 
+## 8. Database Features & Concurrency Guarantees
+
+EVENTHUB showcases advanced PostgreSQL capabilities:
+- **5 Views**: `v_event_sales_summary`, `v_event_occupancy`, `v_organizer_revenue`, `v_monthly_booking_summary`, `v_event_rating_summary`.
+- **4 Stored Functions**: `calculate_booking_total()`, `get_available_ticket_count()`, `get_event_revenue()`, `release_expired_holds()`.
+- **18 Triggers**: Automated audit logging across users, events, and bookings; seat state consistency; sold count synchronization.
+- **Row-Level Locking**: `SELECT ... FOR UPDATE` prevents double-booking under concurrent transactional stress.
+- **Zero Password Leakage**: Passwords are never stored in plaintext, never returned in APIs, and strictly masked in audit logs.
+
 ---
 
-## 10. Demo Dataset
+## 9. Automated Testing Suite
 
-EVENTHUB includes a realistic, relationally consistent, and **100% fictional** demo dataset designed for DBMS queries, complex SQL analytics, and UI prototyping.
+Run all automated test suites from the `backend` directory:
 
-### Fictional Data Notice
-All users, organizations, emails, phone numbers, and payment references are purely fictional. No real personal or financial credentials are used. Passwords are deterministically hashed via PBKDF2-HMAC-SHA256.
-
-### How to Seed the Database
-Run the deterministic seed script from the project root:
 ```bash
-python database/seeds/seed_demo_data.py
-```
-*(The seed script is idempotent; re-running it resets and repopulates the 16 core tables safely within an atomic transaction.)*
-
-### How to Validate
-Run the analytical verification queries against the seeded database:
-```bash
-# Execute 15 business analytics queries (JOINs, aggregations, window functions)
-psql -U postgres -d eventhub -f database/queries/seed_validation.sql
-
-# Or run the automated Pytest validation suite
-cd backend
+# Execute entire test suite (97 tests)
 pytest -v
-```
 
-### Pre-packaged Demo Exports
-Demo database exports are generated in `database/exports/`:
-- **SQL Dump**: `database/exports/eventhub_demo.sql` (Complete DDL + demo records)
-- **CSV Files**: `database/exports/csv/*.csv` (16 individual table CSV files)
-- **ZIP Archive**: `database/exports/eventhub_csv_dataset.zip` (All 16 CSVs compressed)
+# Run concurrency and double-booking prevention regression tests
+pytest -v tests/test_concurrency.py
+
+# Run transactional atomicity and rollback tests
+pytest -v tests/test_transactions.py
+
+# Run database relational integrity tests
+pytest -v tests/test_database_integrity.py
+
+# Run API endpoint integration tests (61 tests)
+pytest -v tests/api/
+```
 
 ---
 
-## 11. Current Development Phase
+## 10. Development Phases Status
 
-### Phase 1: Project Foundation (Completed)
-- [x] Standardized DBMS project directory structure.
-- [x] PostgreSQL connection settings and template configuration (`.env.example`).
-- [x] FastAPI skeleton with `/health` verification endpoint.
-- [x] SQLAlchemy 2.0 Base and engine structure prepared.
-- [x] Alembic configuration pointing to `database/migrations`.
-- [x] React + TypeScript + Vite frontend initialized with Tailwind CSS.
-- [x] Automated test suite verifying health endpoint.
-- [x] Git repository configured with comprehensive `.gitignore`.
-
-### Phase 2: Database Foundation (Completed)
-- [x] Relational schema modeling (16 tables) in SQLAlchemy 2.0.
-- [x] Reversible Alembic database migration (`171a3cddf5ff`).
-- [x] Primary keys, foreign keys, unique candidate keys, and check constraints.
-- [x] B-tree indexes for foreign keys and frequent query filters.
-- [x] Pure SQL DDL export (`database/schema/eventhub_schema.sql`).
-- [x] Database catalog verification script (`database/queries/verify_schema.sql`).
-
-### Phase 3: Demo Data, Seeding & Exports (Current - Completed)
-- [x] Deterministic transactional demo seeder (`database/seeds/seed_demo_data.py`).
-- [x] 16 populated tables adhering to exact volume and constraint requirements.
-- [x] 15 business analytics and SQL validation queries (`database/queries/seed_validation.sql`).
-- [x] Automated seed integrity tests in Pytest (`backend/tests/test_seed.py`).
-- [x] CSV exports for all 16 tables (`database/exports/csv/`) and ZIP archive.
-- [x] Standalone SQL demo export (`database/exports/eventhub_demo.sql`).
+- [x] **Phase 1: Project Foundation**: Directory architecture, PostgreSQL setup, FastAPI skeleton, Alembic, React base.
+- [x] **Phase 2: Database Foundation**: 16 core PostgreSQL tables, foreign keys, unique constraints, check constraints, indexes.
+- [x] **Phase 3: Demo Data & Exports**: Deterministic seeder, 16 CSV exports, SQL dump, analytics verification.
+- [x] **Phase 4: Advanced DBMS Features**: 5 views, 4 stored functions, 18 triggers, row-level locking, double-booking prevention.
+- [x] **Phase 5: Production-Style FastAPI Backend**: 16 routers, 64 endpoints, JWT authentication, RBAC, transaction service integration, Swagger docs, 97 passing tests.
+- [ ] **Phase 6: Frontend Integration**: React + TypeScript + Tailwind UI (Upcoming).
