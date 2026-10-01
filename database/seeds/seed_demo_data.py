@@ -92,6 +92,7 @@ def seed_database(db_engine=None) -> dict[str, int]:
     with Session(target_engine) as session:
         try:
             print("Beginning idempotent database reset...")
+            session.execute(text("SET session_replication_role = 'replica';"))
             clean_database(session)
 
             base_dt = datetime(2026, 8, 1, 10, 0, 0, tzinfo=timezone.utc)
@@ -813,6 +814,9 @@ def seed_database(db_engine=None) -> dict[str, int]:
             session.add_all(audit_logs)
             session.flush()
 
+            # Reset replication role to origin before committing
+            session.execute(text("SET session_replication_role = 'origin';"))
+
             # Commit the entire transaction
             session.commit()
             print("Database transaction successfully committed!")
@@ -840,6 +844,11 @@ def seed_database(db_engine=None) -> dict[str, int]:
 
         except Exception as e:
             session.rollback()
+            try:
+                session.execute(text("SET session_replication_role = 'origin';"))
+                session.commit()
+            except Exception:
+                pass
             print(f"Error during seeding, transaction rolled back: {e}", file=sys.stderr)
             raise
 

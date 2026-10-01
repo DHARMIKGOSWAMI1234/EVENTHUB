@@ -241,3 +241,120 @@ Pre-packaged database exports suitable for staging and local demonstration are a
    - `database/exports/csv/*.csv`: 16 individual comma-separated files containing raw table records.
 3. **Compressed Archive**:
    - `database/exports/eventhub_csv_dataset.zip`: ZIP archive packaging all 16 CSV files.
+
+---
+
+## 12. Advanced DBMS Features
+
+EVENTHUB implements advanced PostgreSQL database-level capabilities that elevate the project into a comprehensive relational database demonstration. Rather than delegating business rules and state validation entirely to application code, the database actively enforces data integrity, maintains synchronized audit trails, executes concurrent row-level locking, and optimizes complex analytical summaries.
+
+### 12.1 PostgreSQL Views
+EVENTHUB provides 5 curated SQL views encapsulating complex multi-table joins, CTE aggregations, and business metrics:
+
+1. **`v_event_sales_summary`**:
+   - **Purpose**: Event-level performance summary combining total bookings, confirmed bookings, tickets sold, and gross revenue.
+   - **DBMS Technique**: CTE-based pre-aggregation of booking line items to prevent multiplication artifacts in multi-item orders; `FILTER (WHERE ...)` clauses for conditional metric summation.
+2. **`v_event_occupancy`**:
+   - **Purpose**: Calculates capacity, sold ticket volume, remaining seats, and occupancy percentages.
+   - **DBMS Technique**: Division-by-zero protection using `NULLIF(sum(tt.capacity), 0)` and `round(..., 2)` floating precision formatting.
+3. **`v_organizer_revenue`**:
+   - **Purpose**: Aggregates gross organizer financial metrics, total events produced, total confirmed tickets, and average booking value.
+   - **DBMS Technique**: Relational grouping by organizer primary key and name with safe division for average spend metrics.
+4. **`v_monthly_booking_summary`**:
+   - **Purpose**: Platform-wide chronological analysis of booking trends by month.
+   - **DBMS Technique**: Temporal extraction functions `EXTRACT(YEAR/MONTH FROM created_at)` and `to_char(..., 'YYYY-MM')`.
+5. **`v_event_rating_summary`**:
+   - **Purpose**: Aggregates customer feedback metrics (total reviews, average rating, min rating, max rating) per event.
+   - **DBMS Technique**: `COALESCE` null-fallback handling ensuring unreviewed events remain properly represented with 0.00 ratings.
+
+### 12.2 Stored Functions (PL/pgSQL)
+Custom server-side stored functions encapsulate deterministic calculation formulas and automated maintenance routines:
+
+1. **`calculate_booking_total(subtotal, discount, tax)`**:
+   - **Signature**: `(NUMERIC, NUMERIC, NUMERIC) -> NUMERIC(12, 2)`
+   - **Classification**: `IMMUTABLE`
+   - **Logic**: Evaluates `subtotal - discount + tax` while enforcing non-negative results `max(0, total)` and two-decimal rounding.
+2. **`get_available_ticket_count(event_id)`**:
+   - **Signature**: `(BIGINT) -> INTEGER`
+   - **Classification**: `STABLE`
+   - **Logic**: Computes remaining ticket capacity across all active ticket types for a given event, guarding against negative inventory.
+3. **`get_event_revenue(event_id)`**:
+   - **Signature**: `(BIGINT) -> NUMERIC(12, 2)`
+   - **Classification**: `STABLE`
+   - **Logic**: Sums `total_amount` strictly for `CONFIRMED` bookings, excluding pending, cancelled, and refunded orders.
+4. **`release_expired_holds()`**:
+   - **Signature**: `() -> INTEGER`
+   - **Classification**: `VOLATILE`
+   - **Logic**: Finds all `event_seats` in `HELD` status where `hold_expires_at < CURRENT_TIMESTAMP`. Transitions them back to `AVAILABLE` and clears hold metadata. Returns the count of released seats without touching `BOOKED` or `BLOCKED` seats.
+
+### 12.3 Database Triggers
+Active automated trigger mechanisms ensure consistent data state transitions and audit logging:
+
+1. **Automatic Timestamp Refresh (`update_updated_at_column`)**:
+   - `BEFORE UPDATE` trigger applied across `users`, `organizers`, `venues`, `events`, `ticket_types`, `bookings`, and `reviews`.
+   - Guarantees `updated_at` reflects the exact microsecond of database modification without requiring client-side timestamp injection.
+2. **Booking Audit Logging (`audit_booking_change`)**:
+   - `AFTER INSERT OR UPDATE OR DELETE` on `bookings`.
+   - Records full `JSONB` state snapshots of `old_data` and `new_data` into `audit_logs` table, tagging actions like `BOOKING_CREATED` and `BOOKING_STATUS_<STATUS>`.
+3. **User Audit Sanitization (`audit_user_change`)**:
+   - `AFTER INSERT OR UPDATE OR DELETE` on `users`.
+   - Captures lifecycle events while strictly sanitizing JSON payloads: `password_hash` is explicitly deleted (`- 'password_hash'`) before writing to audit logs, ensuring zero credential leakage.
+4. **Seat State Consistency Machine (`validate_event_seat_state`)**:
+   - `BEFORE INSERT OR UPDATE` on `event_seats`.
+   - Enforces relational invariants:
+     - `AVAILABLE`: Clears hold fields.
+     - `HELD`: Requires valid `held_by_booking_id` and future `hold_expires_at`. Auto-reverts to `AVAILABLE` if reference is detached.
+     - `BOOKED`: Prohibits reversion back to `HELD`; clears temporary hold timestamps.
+     - `BLOCKED`: Prohibits active hold references.
+5. **Ticket Inventory Synchronization (`update_ticket_type_sold_count`)**:
+   - `AFTER INSERT OR UPDATE OR DELETE` on `tickets`.
+   - Synchronizes `ticket_types.sold_count` whenever tickets transition between active statuses (`ACTIVE`, `USED`) and return statuses (`CANCELLED`, `REFUNDED`). Avoids recursive execution by triggering only across tables.
+
+### 12.4 Concurrency Control & Double-Booking Prevention
+
+#### The Concurrency Problem
+In high-demand event ticketing, multiple customers frequently attempt to reserve or purchase the exact same seat simultaneously. Without database-level locking, a race condition occurs:
+1. Customer A checks seat availability → finds it AVAILABLE.
+2. Customer B checks seat availability → finds it AVAILABLE.
+3. Customer A books the seat.
+4. Customer B overwrites and also books the seat, issuing duplicate tickets.
+
+#### EVENTHUB Resolution Strategy: Row-Level Locking (`SELECT ... FOR UPDATE`)
+EVENTHUB solves this at the database engine level using explicit pessimistic row locking:
+
+```text
+       Customer A Transaction                           Customer B Transaction
+  ┌───────────────────────────────┐               ┌───────────────────────────────┐
+  │ BEGIN TRANSACTION             │               │ BEGIN TRANSACTION             │
+  │ SELECT * FROM event_seats     │               │ SELECT * FROM event_seats     │
+  │   WHERE id = 42 FOR UPDATE;   │ ──(Locks Row)─│   WHERE id = 42 FOR UPDATE;   │
+  │ [Row Lock Acquired]           │               │ [BLOCKED: WAITING FOR LOCK]   │
+  │ Check status: 'AVAILABLE'     │               │              .                │
+  │ UPDATE status = 'BOOKED'      │               │              .                │
+  │ INSERT booking, ticket, etc.  │               │              .                │
+  │ COMMIT TRANSACTION            │ ──(Releases)──│ [Lock Acquired by Customer B] │
+  └───────────────────────────────┘               │ Re-checks seat status:        │
+                                                  │ Status is now 'BOOKED'!       │
+                                                  │ RAISE SeatNotAvailableError   │
+                                                  │ ROLLBACK TRANSACTION          │
+                                                  └───────────────────────────────┘
+```
+
+#### Verification & Invariants
+- Verified via `backend/tests/test_concurrency.py` using `ThreadPoolExecutor` and synchronization barriers across distinct database sessions.
+- In all concurrent race tests, **exactly one customer succeeds**, the competing transaction fails gracefully, and exactly one active ticket is issued per seat.
+
+### 12.5 Transaction Architecture & Rollback Integrity
+The `BookingTransactionService` (`backend/app/services/booking_transaction.py`) coordinates atomic transactions:
+1. Validate event status (`PUBLISHED`) and seating mode (`RESERVED_SEATING`).
+2. Acquire row lock on target seat (`SELECT ... FOR UPDATE`).
+3. Validate seat availability.
+4. Acquire row lock on ticket tier and check quota.
+5. Calculate subtotal, taxes (18%), and net totals.
+6. Insert `bookings` record.
+7. Insert `booking_items` record.
+8. Mutate seat status to `BOOKED`.
+9. Insert simulated payment record (`SUCCESS`).
+10. Issue ticket with unique code and QR token.
+11. Commit transaction (or atomic rollback if any validation step fails).
+
