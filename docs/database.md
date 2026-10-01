@@ -78,7 +78,6 @@ To preserve historical and financial integrity, restrictive delete rules are enf
 - `users`: `email`
 - `organizers`: `user_id`
 - `categories`: `name`
-- `venues`: `name` (unique per address)
 - `venue_seats`: `(venue_id, seat_label)`
 - `events`: `slug`
 - `bookings`: `booking_reference`
@@ -128,8 +127,6 @@ Targeted B-tree indexes are implemented on high-frequency query filters, foreign
 - `audit_logs`: `(user_id)`, `(entity_type, entity_id)`, `(created_at)`
 - `favorites`: `(event_id)`, `(user_id)`
 
-*(Note: UNIQUE columns such as `email`, `slug`, `booking_reference`, `ticket_code`, and `qr_token` automatically utilize PostgreSQL's underlying unique B-tree indexes without redundant index creation.)*
-
 ---
 
 ## 7. Migration Instructions
@@ -148,23 +145,99 @@ alembic downgrade base
 
 ---
 
-## 8. Verification Instructions
+## 8. Demo Dataset (Phase 3)
 
-### Automated Pytest Suite
-Run the full test suite from `backend`:
-```bash
-pytest -v
-```
+### Fictional Data Safety
+> [!IMPORTANT]
+> All records in the demo dataset are **100% fictional**. No real personal names, actual emails, phone numbers, payment credentials, or passwords are used.
+> - Email addresses strictly use safe domains: `@example.com` or `@example.org`.
+> - Phone numbers use non-routable fictional numbers (`+1-555-01xx`).
+> - Passwords are cryptographically hashed using PBKDF2-HMAC-SHA256 (`pbkdf2:sha256:100000$...`). Plaintext passwords are never stored.
+> - Financial transactions and booking codes are simulated (`EVH-2026-xxxxxx`, `TXN-EVH-xxxxxx`).
 
-### PostgreSQL System Catalog Queries
-Execute the verification script located at `database/queries/verify_schema.sql`:
-```bash
-# Inspect table existence, constraints, and indexes using psql
-psql -U postgres -d eventhub -f ../database/queries/verify_schema.sql
-```
+### Dataset Volume Summary
+
+| Table | Target Range | Actual Count | Notes |
+|---|---|---|---|
+| `users` | 30–50 | **45** | 3 Admins, 10 Organizers, 32 Customers |
+| `organizers` | 8–12 | **10** | 10 organizations linked 1:1 to organizer users |
+| `categories` | 10 | **10** | Music, Technology, Sports, Education, Business, Comedy, Workshop, Festival, Gaming, Networking |
+| `venues` | 8–12 | **10** | Spanning Mumbai, Bengaluru, Delhi, Hyderabad, Pune, Chennai, etc. |
+| `venue_seats` | Several hundred | **624** | Configured across 6 reserved seating venues (VIP, Premium, Standard) |
+| `events` | 25–40 | **32** | 20 Published, 7 Completed, 3 Draft, 2 Cancelled |
+| `ticket_types` | 60–100 | **89** | 2–3 tiers per event with capacities and dynamic sold counts |
+| `event_seats` | Several hundred/thousand | **1,560** | Seat allocations across reserved events (Booked, Held, Available) |
+| `bookings` | 80–150 | **110** | 82 Confirmed, 12 Pending, 8 Cancelled, 4 Expired, 4 Refunded |
+| `booking_items` | 150–250 | **165** | Multi-item orders with mathematical subtotal consistency |
+| `payments` | 80–150 | **110** | UPI, Card, Net Banking, and Cash transactions |
+| `tickets` | 150–300 | **196** | Digital admissions (Active, Used, Cancelled, Refunded) with QR tokens |
+| `reviews` | 40–80 | **55** | Ratings (1–5) and realistic feedback from completed event attendees |
+| `notifications` | 50–100 | **80** | In-app alerts with read/unread statuses |
+| `audit_logs` | 50–100 | **75** | Audit entries with structured JSONB snapshots |
+| `favorites` | 50–100 | **75** | User event bookmarks |
 
 ---
 
-## 9. Schema Export
-The complete, production-ready DDL script containing all 16 tables, constraints, foreign keys, and indexes is exported at:
-- `database/schema/eventhub_schema.sql`
+## 9. Seeding & Reset Instructions
+
+The database seeding process is fully deterministic (`SEED = 2026`), safe, and transaction-aware.
+
+### How to Seed / Re-Seed:
+From the project root:
+```bash
+python database/seeds/seed_demo_data.py
+```
+Or with backend virtual environment:
+```bash
+backend\.venv\Scripts\python database/seeds/seed_demo_data.py
+```
+
+### Idempotency & Reset Behavior:
+Running the seed script executes an internal `TRUNCATE ... RESTART IDENTITY CASCADE` across all 16 tables within an atomic transaction. If any constraint or error occurs, the transaction rolls back completely, leaving the database clean and safe.
+
+---
+
+## 10. Verification & Analytics Queries
+
+### Automated Pytest Suite
+Run the comprehensive test suite verifying schema constraints, mathematical consistency, foreign keys, and analytical queries:
+```bash
+cd backend
+pytest -v
+```
+
+### Analytical SQL Queries
+Execute the 15 analytical validation queries demonstrating JOINs, aggregations, window functions, and business analytics:
+```bash
+psql -U postgres -d eventhub -f database/queries/seed_validation.sql
+```
+
+The script verifies:
+1. Total users by role
+2. Events by category
+3. Events by organizer
+4. Events by status
+5. Bookings by status
+6. Payment status distribution
+7. Revenue by event
+8. Revenue by organizer
+9. Average event rating
+10. Event occupancy percentage
+11. Top customers by booking count
+12. Most favorited events
+13. Ticket status distribution
+14. Monthly booking trends
+15. Average ticket price by category
+
+---
+
+## 11. Demo Exports
+
+Pre-packaged database exports suitable for staging and local demonstration are available in `database/exports/`:
+
+1. **SQL Demo Script**:
+   - `database/exports/eventhub_demo.sql`: Self-contained script containing full schema DDL + all 16 table demo INSERT statements.
+2. **CSV Dataset (Individual)**:
+   - `database/exports/csv/*.csv`: 16 individual comma-separated files containing raw table records.
+3. **Compressed Archive**:
+   - `database/exports/eventhub_csv_dataset.zip`: ZIP archive packaging all 16 CSV files.

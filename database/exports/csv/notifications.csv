@@ -1,0 +1,81 @@
+id,user_id,title,message,type,is_read,created_at
+1,14,Booking Confirmed,Your reservation for 'SoundWave Monsoon Music Festiv' is confirmed! Ticket reference: EVH-2026-000001.,BOOKING_CONFIRMATION,True,2026-05-27 20:01:00+05:30
+2,15,Payment Successful,We received your payment of INR 4481.64 for booking EVH-2026-000002.,PAYMENT_RECEIVED,True,2026-05-28 02:57:00+05:30
+3,16,Event Reminder,Reminder: 'Laughter Therapy Live with Roh' is happening tomorrow at Metro Arts Pavilion. Check in starts 1 hr prior.,EVENT_REMINDER,False,2026-06-20 22:35:00+05:30
+4,17,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2026-06-29 22:44:00+05:30
+5,18,Ticket Available for Download,Your digital pass for 'Pro Gaming League Summer Quali' is now ready with QR access.,TICKET_ISSUED,True,2026-07-21 17:27:00+05:30
+6,19,Schedule Update,Please note the revised start time for 'Bengaluru Founder & Investor M'. Details in your dashboard.,SCHEDULE_UPDATE,False,2026-07-28 18:19:00+05:30
+7,20,Booking Confirmed,Your reservation for 'Monsoon Midnight Half Marathon' is confirmed! Ticket reference: EVH-2026-000007.,BOOKING_CONFIRMATION,True,2026-08-09 15:04:00+05:30
+8,21,Payment Successful,We received your payment of INR 4422.64 for booking EVH-2026-000008.,PAYMENT_RECEIVED,True,2026-10-06 00:16:00+05:30
+9,22,Event Reminder,Reminder: 'Global DevCon India 2026' is happening tomorrow at Aurora Convention Center. Check in starts 1 hr prior.,EVENT_REMINDER,False,2026-10-27 01:38:00+05:30
+10,23,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2026-11-03 21:39:00+05:30
+11,24,Ticket Available for Download,Your digital pass for 'UI/UX Design Systems Sprint' is now ready with QR access.,TICKET_ISSUED,True,2026-11-10 03:32:00+05:30
+12,25,Schedule Update,Please note the revised start time for 'CyberDefend Security Summit 20'. Details in your dashboard.,SCHEDULE_UPDATE,False,2026-11-12 00:07:00+05:30
+13,26,Booking Confirmed,Your reservation for 'National Esports Championship ' is confirmed! Ticket reference: EVH-2026-000013.,BOOKING_CONFIRMATION,True,2026-11-24 01:14:00+05:30
+14,27,Payment Successful,We received your payment of INR 2827.28 for booking EVH-2026-000014.,PAYMENT_RECEIVED,True,2026-11-21 15:32:00+05:30
+15,28,Event Reminder,Reminder: 'New Year Acoustic Sunset Gala' is happening tomorrow at Royal Heritage Amphitheat. Check in starts 1 hr prior.,EVENT_REMINDER,False,2026-12-04 16:15:00+05:30
+16,29,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2026-12-21 02:49:00+05:30
+17,30,Ticket Available for Download,Your digital pass for 'Enterprise AI & Data Architect' is now ready with QR access.,TICKET_ISSUED,True,2027-01-08 00:46:00+05:30
+18,31,Schedule Update,Please note the revised start time for 'Kite & Cultural Heritage Fiest'. Details in your dashboard.,SCHEDULE_UPDATE,False,2027-01-04 22:59:00+05:30
+19,32,Booking Confirmed,Your reservation for 'Annual Health & Marathon Expo' is confirmed! Ticket reference: EVH-2026-000019.,BOOKING_CONFIRMATION,True,2027-01-07 22:41:00+05:30
+20,33,Payment Successful,We received your payment of INR 4422.64 for booking EVH-2026-000020.,PAYMENT_RECEIVED,True,2027-01-26 01:00:00+05:30
+21,34,Event Reminder,Reminder: 'FinTech Disruptors Forum' is happening tomorrow at Innovation Hub. Check in starts 1 hr prior.,EVENT_REMINDER,False,2027-01-30 21:54:00+05:30
+22,35,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2027-02-08 23:23:00+05:30
+23,36,Ticket Available for Download,Your digital pass for 'Spring Stand-Up Extravaganza' is now ready with QR access.,TICKET_ISSUED,True,2027-02-19 03:12:00+05:30
+24,37,Schedule Update,Please note the revised start time for 'Robotics & Embedded Systems Co'. Details in your dashboard.,SCHEDULE_UPDATE,False,2027-02-21 16:25:00+05:30
+25,38,Booking Confirmed,Your reservation for 'VR & Immersive Entertainment E' is confirmed! Ticket reference: EVH-2026-000025.,BOOKING_CONFIRMATION,True,2027-03-12 02:05:00+05:30
+26,39,Payment Successful,We received your payment of INR 2827.28 for booking EVH-2026-000026.,PAYMENT_RECEIVED,True,2027-03-13 03:59:00+05:30
+27,40,Event Reminder,Reminder: 'Venture Growth & Scaling Maste' is happening tomorrow at TechPark Conference Cente. Check in starts 1 hr prior.,EVENT_REMINDER,False,2027-03-19 02:50:00+05:30
+28,41,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2026-05-25 02:27:00+05:30
+29,42,Ticket Available for Download,Your digital pass for 'TechNova AI Leadership Summit ' is now ready with QR access.,TICKET_ISSUED,True,2026-05-29 19:13:00+05:30
+30,43,Schedule Update,Please note the revised start time for 'Laughter Therapy Live with Roh'. Details in your dashboard.,SCHEDULE_UPDATE,False,2026-06-23 22:43:00+05:30
+31,44,Booking Confirmed,Your reservation for 'FullStack Cloud Architect Mast' is confirmed! Ticket reference: EVH-2026-000031.,BOOKING_CONFIRMATION,True,2026-06-29 23:03:00+05:30
+32,45,Payment Successful,We received your payment of INR 4422.64 for booking EVH-2026-000032.,PAYMENT_RECEIVED,True,2026-07-07 18:50:00+05:30
+33,14,Event Reminder,Reminder: 'Bengaluru Founder & Investor M' is happening tomorrow at TechPark Conference Cente. Check in starts 1 hr prior.,EVENT_REMINDER,False,2026-07-31 23:38:00+05:30
+34,15,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2026-08-10 19:26:00+05:30
+35,16,Ticket Available for Download,Your digital pass for 'Symphony Under the Stars' is now ready with QR access.,TICKET_ISSUED,True,2026-10-04 16:34:00+05:30
+36,17,Schedule Update,Please note the revised start time for 'Global DevCon India 2026'. Details in your dashboard.,SCHEDULE_UPDATE,False,2026-10-25 21:37:00+05:30
+37,18,Booking Confirmed,Your reservation for 'The Great Stand-Up Comedy Fest' is confirmed! Ticket reference: EVH-2026-000037.,BOOKING_CONFIRMATION,True,2026-11-03 01:49:00+05:30
+38,19,Payment Successful,We received your payment of INR 2827.28 for booking EVH-2026-000038.,PAYMENT_RECEIVED,True,2026-11-08 01:03:00+05:30
+39,20,Event Reminder,Reminder: 'CyberDefend Security Summit 20' is happening tomorrow at TechPark Conference Cente. Check in starts 1 hr prior.,EVENT_REMINDER,False,2026-11-16 17:57:00+05:30
+40,21,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2026-11-24 21:58:00+05:30
+41,22,Ticket Available for Download,Your digital pass for 'Global Biotech Innovations Exp' is now ready with QR access.,TICKET_ISSUED,True,2026-12-01 02:21:00+05:30
+42,23,Schedule Update,Please note the revised start time for 'New Year Acoustic Sunset Gala'. Details in your dashboard.,SCHEDULE_UPDATE,False,2026-12-12 03:09:00+05:30
+43,24,Booking Confirmed,Your reservation for 'National Collegiate Hackathon ' is confirmed! Ticket reference: EVH-2026-000043.,BOOKING_CONFIRMATION,True,2026-12-28 23:38:00+05:30
+44,25,Payment Successful,We received your payment of INR 4422.64 for booking EVH-2026-000044.,PAYMENT_RECEIVED,True,2027-01-05 20:40:00+05:30
+45,26,Event Reminder,Reminder: 'Kite & Cultural Heritage Fiest' is happening tomorrow at Riverfront Auditorium. Check in starts 1 hr prior.,EVENT_REMINDER,False,2027-01-03 18:14:00+05:30
+46,27,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2027-01-14 15:51:00+05:30
+47,28,Ticket Available for Download,Your digital pass for 'Indie Rock Underground Showcas' is now ready with QR access.,TICKET_ISSUED,True,2027-01-21 22:29:00+05:30
+48,29,Schedule Update,Please note the revised start time for 'FinTech Disruptors Forum'. Details in your dashboard.,SCHEDULE_UPDATE,False,2027-02-02 18:46:00+05:30
+49,30,Booking Confirmed,Your reservation for 'CleanTech & Renewable Energy E' is confirmed! Ticket reference: EVH-2026-000049.,BOOKING_CONFIRMATION,True,2027-02-15 17:29:00+05:30
+50,31,Payment Successful,We received your payment of INR 4481.64 for booking EVH-2026-000050.,PAYMENT_RECEIVED,True,2027-02-14 21:45:00+05:30
+51,32,Event Reminder,Reminder: 'Robotics & Embedded Systems Co' is happening tomorrow at Aurora Convention Center. Check in starts 1 hr prior.,EVENT_REMINDER,False,2027-03-04 21:41:00+05:30
+52,33,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2027-02-26 22:25:00+05:30
+53,34,Ticket Available for Download,Your digital pass for 'South India Culinary Heritage ' is now ready with QR access.,TICKET_ISSUED,True,2027-03-16 00:03:00+05:30
+54,35,Schedule Update,Please note the revised start time for 'Venture Growth & Scaling Maste'. Details in your dashboard.,SCHEDULE_UPDATE,False,2027-03-21 20:56:00+05:30
+55,36,Booking Confirmed,Your reservation for 'SoundWave Monsoon Music Festiv' is confirmed! Ticket reference: EVH-2026-000055.,BOOKING_CONFIRMATION,True,2026-05-28 03:08:00+05:30
+56,37,Payment Successful,We received your payment of INR 4422.64 for booking EVH-2026-000056.,PAYMENT_RECEIVED,True,2026-06-02 02:47:00+05:30
+57,38,Event Reminder,Reminder: 'Laughter Therapy Live with Roh' is happening tomorrow at Metro Arts Pavilion. Check in starts 1 hr prior.,EVENT_REMINDER,False,2026-06-12 20:40:00+05:30
+58,39,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2026-07-01 22:52:00+05:30
+59,40,Ticket Available for Download,Your digital pass for 'Pro Gaming League Summer Quali' is now ready with QR access.,TICKET_ISSUED,True,2026-07-20 18:24:00+05:30
+60,41,Schedule Update,Please note the revised start time for 'Bengaluru Founder & Investor M'. Details in your dashboard.,SCHEDULE_UPDATE,False,2026-08-03 23:07:00+05:30
+61,42,Booking Confirmed,Your reservation for 'Monsoon Midnight Half Marathon' is confirmed! Ticket reference: EVH-2026-000061.,BOOKING_CONFIRMATION,True,2026-08-07 04:48:00+05:30
+62,43,Payment Successful,We received your payment of INR 4481.64 for booking EVH-2026-000062.,PAYMENT_RECEIVED,True,2026-10-04 23:03:00+05:30
+63,44,Event Reminder,Reminder: 'Global DevCon India 2026' is happening tomorrow at Aurora Convention Center. Check in starts 1 hr prior.,EVENT_REMINDER,False,2026-10-23 04:26:00+05:30
+64,45,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2026-10-29 15:13:00+05:30
+65,14,Ticket Available for Download,Your digital pass for 'UI/UX Design Systems Sprint' is now ready with QR access.,TICKET_ISSUED,True,2026-10-29 22:03:00+05:30
+66,15,Schedule Update,Please note the revised start time for 'CyberDefend Security Summit 20'. Details in your dashboard.,SCHEDULE_UPDATE,False,2026-11-17 02:23:00+05:30
+67,16,Booking Confirmed,Your reservation for 'National Esports Championship ' is confirmed! Ticket reference: EVH-2026-000067.,BOOKING_CONFIRMATION,True,2026-11-25 18:04:00+05:30
+68,17,Payment Successful,We received your payment of INR 2768.28 for booking EVH-2026-000068.,PAYMENT_RECEIVED,True,2026-11-25 21:40:00+05:30
+69,18,Event Reminder,Reminder: 'New Year Acoustic Sunset Gala' is happening tomorrow at Royal Heritage Amphitheat. Check in starts 1 hr prior.,EVENT_REMINDER,False,2026-12-16 01:46:00+05:30
+70,19,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2026-12-24 23:00:00+05:30
+71,20,Ticket Available for Download,Your digital pass for 'Enterprise AI & Data Architect' is now ready with QR access.,TICKET_ISSUED,True,2027-01-01 01:39:00+05:30
+72,21,Schedule Update,Please note the revised start time for 'Kite & Cultural Heritage Fiest'. Details in your dashboard.,SCHEDULE_UPDATE,False,2027-01-02 02:06:00+05:30
+73,22,Booking Confirmed,Your reservation for 'Annual Health & Marathon Expo' is confirmed! Ticket reference: EVH-2026-000073.,BOOKING_CONFIRMATION,True,2027-01-14 21:34:00+05:30
+74,23,Payment Successful,We received your payment of INR 4481.64 for booking EVH-2026-000074.,PAYMENT_RECEIVED,True,2027-01-18 20:39:00+05:30
+75,24,Event Reminder,Reminder: 'FinTech Disruptors Forum' is happening tomorrow at Innovation Hub. Check in starts 1 hr prior.,EVENT_REMINDER,False,2027-01-22 03:49:00+05:30
+76,25,Welcome to EVENTHUB,"Explore upcoming music, technology, and sports experiences near you.",WELCOME,True,2027-02-09 18:44:00+05:30
+77,26,Ticket Available for Download,Your digital pass for 'Spring Stand-Up Extravaganza' is now ready with QR access.,TICKET_ISSUED,True,2027-02-21 23:42:00+05:30
+78,27,Schedule Update,Please note the revised start time for 'Robotics & Embedded Systems Co'. Details in your dashboard.,SCHEDULE_UPDATE,False,2027-03-05 22:21:00+05:30
+79,28,Booking Confirmed,Your reservation for 'VR & Immersive Entertainment E' is confirmed! Ticket reference: EVH-2026-000079.,BOOKING_CONFIRMATION,True,2027-03-12 01:58:00+05:30
+80,29,Payment Successful,We received your payment of INR 2768.28 for booking EVH-2026-000080.,PAYMENT_RECEIVED,True,2027-03-17 20:30:00+05:30

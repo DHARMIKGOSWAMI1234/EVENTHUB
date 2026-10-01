@@ -1,0 +1,76 @@
+id,user_id,action,entity_type,entity_id,old_data,new_data,created_at
+1,15,USER_REGISTRATION,users,1,,"{""role"": ""CUSTOMER"", ""status"": ""active""}",2026-06-29 15:30:00+05:30
+2,16,ORGANIZER_VERIFIED,organizers,2,"{""verified"": false}","{""verified"": true}",2026-07-18 15:30:00+05:30
+3,17,EVENT_CREATED,events,3,,"{""slug"": ""new-event"", ""status"": ""DRAFT""}",2026-06-11 15:30:00+05:30
+4,1,EVENT_PUBLISHED,events,4,"{""status"": ""DRAFT""}","{""status"": ""PUBLISHED""}",2026-06-06 15:30:00+05:30
+5,19,BOOKING_CREATED,bookings,5,,"{""status"": ""PENDING_PAYMENT"", ""currency"": ""INR""}",2026-07-14 15:30:00+05:30
+6,20,PAYMENT_SUCCESS,payments,6,"{""status"": ""PENDING""}","{""status"": ""SUCCESS"", ""gateway"": ""SIMULATED""}",2026-06-12 15:30:00+05:30
+7,21,TICKET_ISSUED,tickets,7,,"{""status"": ""ACTIVE"", ""seat_mode"": ""RESERVED""}",2026-06-06 15:30:00+05:30
+8,1,EVENT_COMPLETED,events,8,"{""status"": ""PUBLISHED""}","{""status"": ""COMPLETED""}",2026-06-16 15:30:00+05:30
+9,23,USER_REGISTRATION,users,9,,"{""role"": ""CUSTOMER"", ""status"": ""active""}",2026-06-30 15:30:00+05:30
+10,24,ORGANIZER_VERIFIED,organizers,10,"{""verified"": false}","{""verified"": true}",2026-07-23 15:30:00+05:30
+11,25,EVENT_CREATED,events,11,,"{""slug"": ""new-event"", ""status"": ""DRAFT""}",2026-06-26 15:30:00+05:30
+12,1,EVENT_PUBLISHED,events,12,"{""status"": ""DRAFT""}","{""status"": ""PUBLISHED""}",2026-06-18 15:30:00+05:30
+13,27,BOOKING_CREATED,bookings,13,,"{""status"": ""PENDING_PAYMENT"", ""currency"": ""INR""}",2026-06-08 15:30:00+05:30
+14,28,PAYMENT_SUCCESS,payments,14,"{""status"": ""PENDING""}","{""status"": ""SUCCESS"", ""gateway"": ""SIMULATED""}",2026-06-07 15:30:00+05:30
+15,29,TICKET_ISSUED,tickets,15,,"{""status"": ""ACTIVE"", ""seat_mode"": ""RESERVED""}",2026-07-11 15:30:00+05:30
+16,1,EVENT_COMPLETED,events,16,"{""status"": ""PUBLISHED""}","{""status"": ""COMPLETED""}",2026-07-08 15:30:00+05:30
+17,31,USER_REGISTRATION,users,17,,"{""role"": ""CUSTOMER"", ""status"": ""active""}",2026-06-20 15:30:00+05:30
+18,32,ORGANIZER_VERIFIED,organizers,18,"{""verified"": false}","{""verified"": true}",2026-07-06 15:30:00+05:30
+19,33,EVENT_CREATED,events,19,,"{""slug"": ""new-event"", ""status"": ""DRAFT""}",2026-06-27 15:30:00+05:30
+20,1,EVENT_PUBLISHED,events,20,"{""status"": ""DRAFT""}","{""status"": ""PUBLISHED""}",2026-06-22 15:30:00+05:30
+21,35,BOOKING_CREATED,bookings,21,,"{""status"": ""PENDING_PAYMENT"", ""currency"": ""INR""}",2026-06-15 15:30:00+05:30
+22,36,PAYMENT_SUCCESS,payments,22,"{""status"": ""PENDING""}","{""status"": ""SUCCESS"", ""gateway"": ""SIMULATED""}",2026-06-27 15:30:00+05:30
+23,37,TICKET_ISSUED,tickets,23,,"{""status"": ""ACTIVE"", ""seat_mode"": ""RESERVED""}",2026-07-19 15:30:00+05:30
+24,1,EVENT_COMPLETED,events,24,"{""status"": ""PUBLISHED""}","{""status"": ""COMPLETED""}",2026-07-22 15:30:00+05:30
+25,39,USER_REGISTRATION,users,25,,"{""role"": ""CUSTOMER"", ""status"": ""active""}",2026-06-23 15:30:00+05:30
+26,40,ORGANIZER_VERIFIED,organizers,26,"{""verified"": false}","{""verified"": true}",2026-06-26 15:30:00+05:30
+27,41,EVENT_CREATED,events,27,,"{""slug"": ""new-event"", ""status"": ""DRAFT""}",2026-06-16 15:30:00+05:30
+28,1,EVENT_PUBLISHED,events,28,"{""status"": ""DRAFT""}","{""status"": ""PUBLISHED""}",2026-07-22 15:30:00+05:30
+29,43,BOOKING_CREATED,bookings,29,,"{""status"": ""PENDING_PAYMENT"", ""currency"": ""INR""}",2026-06-15 15:30:00+05:30
+30,44,PAYMENT_SUCCESS,payments,30,"{""status"": ""PENDING""}","{""status"": ""SUCCESS"", ""gateway"": ""SIMULATED""}",2026-07-22 15:30:00+05:30
+31,45,TICKET_ISSUED,tickets,31,,"{""status"": ""ACTIVE"", ""seat_mode"": ""RESERVED""}",2026-07-23 15:30:00+05:30
+32,1,EVENT_COMPLETED,events,32,"{""status"": ""PUBLISHED""}","{""status"": ""COMPLETED""}",2026-06-10 15:30:00+05:30
+33,15,USER_REGISTRATION,users,33,,"{""role"": ""CUSTOMER"", ""status"": ""active""}",2026-06-09 15:30:00+05:30
+34,16,ORGANIZER_VERIFIED,organizers,34,"{""verified"": false}","{""verified"": true}",2026-06-10 15:30:00+05:30
+35,17,EVENT_CREATED,events,35,,"{""slug"": ""new-event"", ""status"": ""DRAFT""}",2026-06-19 15:30:00+05:30
+36,1,EVENT_PUBLISHED,events,36,"{""status"": ""DRAFT""}","{""status"": ""PUBLISHED""}",2026-06-25 15:30:00+05:30
+37,19,BOOKING_CREATED,bookings,37,,"{""status"": ""PENDING_PAYMENT"", ""currency"": ""INR""}",2026-07-28 15:30:00+05:30
+38,20,PAYMENT_SUCCESS,payments,38,"{""status"": ""PENDING""}","{""status"": ""SUCCESS"", ""gateway"": ""SIMULATED""}",2026-06-10 15:30:00+05:30
+39,21,TICKET_ISSUED,tickets,39,,"{""status"": ""ACTIVE"", ""seat_mode"": ""RESERVED""}",2026-06-19 15:30:00+05:30
+40,1,EVENT_COMPLETED,events,40,"{""status"": ""PUBLISHED""}","{""status"": ""COMPLETED""}",2026-06-06 15:30:00+05:30
+41,23,USER_REGISTRATION,users,41,,"{""role"": ""CUSTOMER"", ""status"": ""active""}",2026-07-29 15:30:00+05:30
+42,24,ORGANIZER_VERIFIED,organizers,42,"{""verified"": false}","{""verified"": true}",2026-07-14 15:30:00+05:30
+43,25,EVENT_CREATED,events,43,,"{""slug"": ""new-event"", ""status"": ""DRAFT""}",2026-06-11 15:30:00+05:30
+44,1,EVENT_PUBLISHED,events,44,"{""status"": ""DRAFT""}","{""status"": ""PUBLISHED""}",2026-07-12 15:30:00+05:30
+45,27,BOOKING_CREATED,bookings,45,,"{""status"": ""PENDING_PAYMENT"", ""currency"": ""INR""}",2026-06-09 15:30:00+05:30
+46,28,PAYMENT_SUCCESS,payments,46,"{""status"": ""PENDING""}","{""status"": ""SUCCESS"", ""gateway"": ""SIMULATED""}",2026-07-20 15:30:00+05:30
+47,29,TICKET_ISSUED,tickets,47,,"{""status"": ""ACTIVE"", ""seat_mode"": ""RESERVED""}",2026-07-23 15:30:00+05:30
+48,1,EVENT_COMPLETED,events,48,"{""status"": ""PUBLISHED""}","{""status"": ""COMPLETED""}",2026-07-14 15:30:00+05:30
+49,31,USER_REGISTRATION,users,49,,"{""role"": ""CUSTOMER"", ""status"": ""active""}",2026-06-27 15:30:00+05:30
+50,32,ORGANIZER_VERIFIED,organizers,50,"{""verified"": false}","{""verified"": true}",2026-06-17 15:30:00+05:30
+51,33,EVENT_CREATED,events,51,,"{""slug"": ""new-event"", ""status"": ""DRAFT""}",2026-07-09 15:30:00+05:30
+52,1,EVENT_PUBLISHED,events,52,"{""status"": ""DRAFT""}","{""status"": ""PUBLISHED""}",2026-07-23 15:30:00+05:30
+53,35,BOOKING_CREATED,bookings,53,,"{""status"": ""PENDING_PAYMENT"", ""currency"": ""INR""}",2026-07-02 15:30:00+05:30
+54,36,PAYMENT_SUCCESS,payments,54,"{""status"": ""PENDING""}","{""status"": ""SUCCESS"", ""gateway"": ""SIMULATED""}",2026-07-21 15:30:00+05:30
+55,37,TICKET_ISSUED,tickets,55,,"{""status"": ""ACTIVE"", ""seat_mode"": ""RESERVED""}",2026-07-20 15:30:00+05:30
+56,1,EVENT_COMPLETED,events,56,"{""status"": ""PUBLISHED""}","{""status"": ""COMPLETED""}",2026-06-17 15:30:00+05:30
+57,39,USER_REGISTRATION,users,57,,"{""role"": ""CUSTOMER"", ""status"": ""active""}",2026-07-28 15:30:00+05:30
+58,40,ORGANIZER_VERIFIED,organizers,58,"{""verified"": false}","{""verified"": true}",2026-06-13 15:30:00+05:30
+59,41,EVENT_CREATED,events,59,,"{""slug"": ""new-event"", ""status"": ""DRAFT""}",2026-07-20 15:30:00+05:30
+60,1,EVENT_PUBLISHED,events,60,"{""status"": ""DRAFT""}","{""status"": ""PUBLISHED""}",2026-06-18 15:30:00+05:30
+61,43,BOOKING_CREATED,bookings,61,,"{""status"": ""PENDING_PAYMENT"", ""currency"": ""INR""}",2026-07-22 15:30:00+05:30
+62,44,PAYMENT_SUCCESS,payments,62,"{""status"": ""PENDING""}","{""status"": ""SUCCESS"", ""gateway"": ""SIMULATED""}",2026-07-05 15:30:00+05:30
+63,45,TICKET_ISSUED,tickets,63,,"{""status"": ""ACTIVE"", ""seat_mode"": ""RESERVED""}",2026-06-20 15:30:00+05:30
+64,1,EVENT_COMPLETED,events,64,"{""status"": ""PUBLISHED""}","{""status"": ""COMPLETED""}",2026-06-22 15:30:00+05:30
+65,15,USER_REGISTRATION,users,65,,"{""role"": ""CUSTOMER"", ""status"": ""active""}",2026-06-30 15:30:00+05:30
+66,16,ORGANIZER_VERIFIED,organizers,66,"{""verified"": false}","{""verified"": true}",2026-06-03 15:30:00+05:30
+67,17,EVENT_CREATED,events,67,,"{""slug"": ""new-event"", ""status"": ""DRAFT""}",2026-06-27 15:30:00+05:30
+68,1,EVENT_PUBLISHED,events,68,"{""status"": ""DRAFT""}","{""status"": ""PUBLISHED""}",2026-07-30 15:30:00+05:30
+69,19,BOOKING_CREATED,bookings,69,,"{""status"": ""PENDING_PAYMENT"", ""currency"": ""INR""}",2026-07-12 15:30:00+05:30
+70,20,PAYMENT_SUCCESS,payments,70,"{""status"": ""PENDING""}","{""status"": ""SUCCESS"", ""gateway"": ""SIMULATED""}",2026-07-17 15:30:00+05:30
+71,21,TICKET_ISSUED,tickets,71,,"{""status"": ""ACTIVE"", ""seat_mode"": ""RESERVED""}",2026-06-29 15:30:00+05:30
+72,1,EVENT_COMPLETED,events,72,"{""status"": ""PUBLISHED""}","{""status"": ""COMPLETED""}",2026-07-08 15:30:00+05:30
+73,23,USER_REGISTRATION,users,73,,"{""role"": ""CUSTOMER"", ""status"": ""active""}",2026-06-05 15:30:00+05:30
+74,24,ORGANIZER_VERIFIED,organizers,74,"{""verified"": false}","{""verified"": true}",2026-06-27 15:30:00+05:30
+75,25,EVENT_CREATED,events,75,,"{""slug"": ""new-event"", ""status"": ""DRAFT""}",2026-07-26 15:30:00+05:30

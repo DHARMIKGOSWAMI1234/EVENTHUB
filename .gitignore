@@ -71,6 +71,7 @@ Thumbs.db
 # Database Dumps and Temporary Files
 *.dump
 *.sql.bak
-database/exports/*.sql
 database/exports/*.dump
 !database/exports/.gitkeep
+!database/exports/eventhub_demo.sql
+!database/exports/eventhub_csv_dataset.zip

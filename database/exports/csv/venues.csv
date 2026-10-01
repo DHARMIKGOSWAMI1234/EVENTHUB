@@ -1,0 +1,11 @@
+id,name,description,address_line,city,state,country,capacity,created_at,updated_at
+1,Aurora Convention Center,Multi-tier convention arena with cutting-edge acoustics.,104 Outer Ring Road,Bengaluru,Karnataka,India,2500,2026-04-23 15:30:00+05:30,2026-04-23 15:30:00+05:30
+2,Skyline Arena,Premier indoor sports and music entertainment colosseum.,"45 Coastal Boulevard, Worli",Mumbai,Maharashtra,India,5000,2026-04-23 15:30:00+05:30,2026-04-23 15:30:00+05:30
+3,Riverfront Auditorium,State-of-the-art concert hall overlooking the promenade.,12 Riverfront Park West,Ahmedabad,Gujarat,India,1200,2026-04-23 15:30:00+05:30,2026-04-23 15:30:00+05:30
+4,Innovation Hub,Flexible open-concept tech pavilion and startup forum.,88 HITEC City Phase 2,Hyderabad,Telangana,India,800,2026-04-23 15:30:00+05:30,2026-04-23 15:30:00+05:30
+5,Grand Civic Hall,Historic neo-classical hall with multi-level balcony tiers.,15 Parliament Enclave,Delhi,Delhi,India,1500,2026-04-23 15:30:00+05:30,2026-04-23 15:30:00+05:30
+6,Metro Arts Pavilion,"Intimate theater for comedy, chamber music, and drama.",22 Koregaon Park Road,Pune,Maharashtra,India,600,2026-04-23 15:30:00+05:30,2026-04-23 15:30:00+05:30
+7,TechPark Conference Center,Sprawling corporate convention auditorium.,50 Electronics City Phase 1,Bengaluru,Karnataka,India,1000,2026-04-23 15:30:00+05:30,2026-04-23 15:30:00+05:30
+8,Galaxy Expo Grounds,Gigantic multi-acre outdoor exhibition and festival park.,70 Western Express Highway,Mumbai,Maharashtra,India,10000,2026-04-23 15:30:00+05:30,2026-04-23 15:30:00+05:30
+9,Royal Heritage Amphitheatre,Open-air scenic stone amphitheatre.,9 Amer Palace Road,Jaipur,Rajasthan,India,2000,2026-04-23 15:30:00+05:30,2026-04-23 15:30:00+05:30
+10,Zenith Sports Complex,High-capacity modern athletic arena and stadium.,33 Marina Coastline Road,Chennai,Tamil Nadu,India,8000,2026-04-23 15:30:00+05:30,2026-04-23 15:30:00+05:30

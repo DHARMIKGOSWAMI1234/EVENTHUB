@@ -216,9 +216,44 @@ npm run build
 
 ---
 
-## 10. Current Development Phase
+---
 
-### Phase 1: Project Foundation (Current)
+## 10. Demo Dataset
+
+EVENTHUB includes a realistic, relationally consistent, and **100% fictional** demo dataset designed for DBMS queries, complex SQL analytics, and UI prototyping.
+
+### Fictional Data Notice
+All users, organizations, emails, phone numbers, and payment references are purely fictional. No real personal or financial credentials are used. Passwords are deterministically hashed via PBKDF2-HMAC-SHA256.
+
+### How to Seed the Database
+Run the deterministic seed script from the project root:
+```bash
+python database/seeds/seed_demo_data.py
+```
+*(The seed script is idempotent; re-running it resets and repopulates the 16 core tables safely within an atomic transaction.)*
+
+### How to Validate
+Run the analytical verification queries against the seeded database:
+```bash
+# Execute 15 business analytics queries (JOINs, aggregations, window functions)
+psql -U postgres -d eventhub -f database/queries/seed_validation.sql
+
+# Or run the automated Pytest validation suite
+cd backend
+pytest -v
+```
+
+### Pre-packaged Demo Exports
+Demo database exports are generated in `database/exports/`:
+- **SQL Dump**: `database/exports/eventhub_demo.sql` (Complete DDL + demo records)
+- **CSV Files**: `database/exports/csv/*.csv` (16 individual table CSV files)
+- **ZIP Archive**: `database/exports/eventhub_csv_dataset.zip` (All 16 CSVs compressed)
+
+---
+
+## 11. Current Development Phase
+
+### Phase 1: Project Foundation (Completed)
 - [x] Standardized DBMS project directory structure.
 - [x] PostgreSQL connection settings and template configuration (`.env.example`).
 - [x] FastAPI skeleton with `/health` verification endpoint.
@@ -228,8 +263,18 @@ npm run build
 - [x] Automated test suite verifying health endpoint.
 - [x] Git repository configured with comprehensive `.gitignore`.
 
-### Phase 2: Database Schema & Entity Modeling (Upcoming)
-- Relational schema modeling (16 tables).
-- Alembic database migration generation and execution.
-- Relational constraints, foreign keys, and indexes.
-- Realistic seed dataset creation.
+### Phase 2: Database Foundation (Completed)
+- [x] Relational schema modeling (16 tables) in SQLAlchemy 2.0.
+- [x] Reversible Alembic database migration (`171a3cddf5ff`).
+- [x] Primary keys, foreign keys, unique candidate keys, and check constraints.
+- [x] B-tree indexes for foreign keys and frequent query filters.
+- [x] Pure SQL DDL export (`database/schema/eventhub_schema.sql`).
+- [x] Database catalog verification script (`database/queries/verify_schema.sql`).
+
+### Phase 3: Demo Data, Seeding & Exports (Current - Completed)
+- [x] Deterministic transactional demo seeder (`database/seeds/seed_demo_data.py`).
+- [x] 16 populated tables adhering to exact volume and constraint requirements.
+- [x] 15 business analytics and SQL validation queries (`database/queries/seed_validation.sql`).
+- [x] Automated seed integrity tests in Pytest (`backend/tests/test_seed.py`).
+- [x] CSV exports for all 16 tables (`database/exports/csv/`) and ZIP archive.
+- [x] Standalone SQL demo export (`database/exports/eventhub_demo.sql`).

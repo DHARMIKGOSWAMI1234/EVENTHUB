@@ -1,0 +1,11 @@
+id,user_id,organization_name,description,contact_email,contact_phone,created_at,updated_at
+1,4,PulseWave Events,"Pioneering live electronic, acoustic, and festival experiences across India.",contact@pulsewave.example.org,+1-555-0201,2026-04-28 15:30:00+05:30,2026-04-28 15:30:00+05:30
+2,5,TechNova Conferences,Premier technology and AI symposium organizers connecting developers and leaders.,events@technova.example.org,+1-555-0202,2026-04-28 15:30:00+05:30,2026-04-28 15:30:00+05:30
+3,6,UrbanStage Productions,"Curators of premier comedy specials, live theatre, and spoken word showcases.",booking@urbanstage.example.org,+1-555-0203,2026-04-28 15:30:00+05:30,2026-04-28 15:30:00+05:30
+4,7,NextGen Learning,"Hands-on professional technology bootcamps, workshops, and certifications.",hello@nextgenlearning.example.org,+1-555-0204,2026-04-28 15:30:00+05:30,2026-04-28 15:30:00+05:30
+5,8,GameSphere Events,"Competitive esports tournaments, LAN parties, and game development summits.",info@gamesphere.example.org,+1-555-0205,2026-04-28 15:30:00+05:30,2026-04-28 15:30:00+05:30
+6,9,BrightPath Workshops,"Inspiring creativity, design thinking, and leadership masterclasses.",team@brightpath.example.org,+1-555-0206,2026-04-28 15:30:00+05:30,2026-04-28 15:30:00+05:30
+7,10,CampusConnect Youth,"Dynamic inter-collegiate youth festivals, hackathons, and talent expos.",engage@campusconnect.example.org,+1-555-0207,2026-04-28 15:30:00+05:30,2026-04-28 15:30:00+05:30
+8,11,SummitWorks Global,High-level executive leadership summits and investor networking galas.,summit@summitworks.example.org,+1-555-0208,2026-04-28 15:30:00+05:30,2026-04-28 15:30:00+05:30
+9,12,Velocity Sports Media,"Community marathons, cycling grand tours, and athletic championships.",sports@velocitymedia.example.org,+1-555-0209,2026-04-28 15:30:00+05:30,2026-04-28 15:30:00+05:30
+10,13,Artisan Cultural Collective,"Traditional folk festivals, culinary carnivals, and cultural galas.",culture@artisancollective.example.org,+1-555-0210,2026-04-28 15:30:00+05:30,2026-04-28 15:30:00+05:30

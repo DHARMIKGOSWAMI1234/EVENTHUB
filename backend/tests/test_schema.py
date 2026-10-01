@@ -182,9 +182,9 @@ def test_check_constraints_verification(db_engine):
     assert "ck_reviews_rating_range" in rev_checks
 
 
-def test_tables_are_empty_in_phase_2(db_engine):
-    """Confirm zero rows exist across all tables in Phase 2."""
+def test_tables_contain_records(db_engine):
+    """Confirm all 16 core tables exist and are populated with records."""
     with db_engine.connect() as conn:
         for table_name in EXPECTED_TABLES:
             count = conn.execute(text(f"SELECT count(*) FROM {table_name};")).scalar()
-            assert count == 0, f"Expected 0 rows in table {table_name}, found {count}"
+            assert count > 0, f"Expected records in table {table_name}, found {count}"
