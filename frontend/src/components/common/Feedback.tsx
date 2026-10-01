@@ -94,3 +94,31 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     </div>
   );
 };
+
+export interface FeedbackProps {
+  state: 'loading' | 'empty' | 'error';
+  title?: string;
+  message?: string;
+  actionLabel?: string;
+  onAction?: () => void;
+}
+
+export const Feedback: React.FC<FeedbackProps> = ({
+  state,
+  title,
+  message,
+  actionLabel,
+  onAction,
+}) => {
+  if (state === 'loading') {
+    return <LoadingSpinner message={title || message} />;
+  }
+  return (
+    <EmptyState
+      title={title || (state === 'error' ? 'Something went wrong' : 'No items found')}
+      description={message}
+      actionText={actionLabel}
+      onAction={onAction}
+    />
+  );
+};

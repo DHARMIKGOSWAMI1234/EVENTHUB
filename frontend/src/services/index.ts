@@ -8,3 +8,4 @@ export * from './userActionsApi';
 export * from './organizerApi';
 export * from './adminApi';
 export * from './analyticsApi';
+export * from './databaseApi';

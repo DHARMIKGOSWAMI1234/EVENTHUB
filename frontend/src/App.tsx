@@ -17,6 +17,7 @@ import { EventDetailPage } from './pages/public/EventDetailPage'
 import { CategoriesPage } from './pages/public/CategoriesPage'
 import { VenuesPage } from './pages/public/VenuesPage'
 import { NotFoundPage } from './pages/public/NotFoundPage'
+import { DatabasePortalPage } from './pages/database/DatabasePortalPage'
 
 // Auth Pages
 import { LoginPage } from './pages/auth/LoginPage'
@@ -63,6 +64,8 @@ export function App() {
               <Route path="/events/:eventId" element={<EventDetailPage />} />
               <Route path="/categories" element={<CategoriesPage />} />
               <Route path="/venues" element={<VenuesPage />} />
+              <Route path="/database" element={<DatabasePortalPage />} />
+              <Route path="/database/:tab" element={<DatabasePortalPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
 

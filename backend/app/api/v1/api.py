@@ -21,6 +21,7 @@ from app.api.routers import (
     organizers,
     admin,
     analytics,
+    database,
 )
 
 api_router = APIRouter()
@@ -41,3 +42,4 @@ api_router.include_router(notifications.router)
 api_router.include_router(organizers.router)
 api_router.include_router(admin.router)
 api_router.include_router(analytics.router)
+api_router.include_router(database.router)

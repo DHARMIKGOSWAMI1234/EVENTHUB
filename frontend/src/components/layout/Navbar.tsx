@@ -14,6 +14,7 @@ import {
   Shield,
   Briefcase,
   ChevronDown,
+  Database,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { notificationApi } from '../../services/userActionsApi';
@@ -80,6 +81,13 @@ export const Navbar: React.FC = () => {
           <NavLink to="/venues" className={navLinkClass}>
             <MapPin className="w-4 h-4" />
             Venues
+          </NavLink>
+          <NavLink to="/database" className={navLinkClass}>
+            <Database className="w-4 h-4 text-emerald-400" />
+            <span>Database</span>
+            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-950/80 text-emerald-400 border border-emerald-800/80 font-bold">
+              DBMS
+            </span>
           </NavLink>
         </nav>
 
@@ -258,6 +266,19 @@ export const Navbar: React.FC = () => {
           >
             <MapPin className="w-4 h-4 text-indigo-400" />
             Venues
+          </NavLink>
+          <NavLink
+            to="/database"
+            onClick={() => setMobileMenuOpen(false)}
+            className="flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-900"
+          >
+            <div className="flex items-center gap-2.5">
+              <Database className="w-4 h-4 text-emerald-400" />
+              <span>Database Portal</span>
+            </div>
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold">
+              DBMS
+            </span>
           </NavLink>
 
           {isAuthenticated && user ? (

@@ -209,7 +209,7 @@ EVENTHUB showcases advanced PostgreSQL capabilities:
 Run all automated test suites from the `backend` directory:
 
 ```bash
-# Execute entire test suite (97 tests)
+# Execute entire test suite (111 tests)
 pytest -v
 
 # Run concurrency and double-booking prevention regression tests
@@ -221,7 +221,7 @@ pytest -v tests/test_transactions.py
 # Run database relational integrity tests
 pytest -v tests/test_database_integrity.py
 
-# Run API endpoint integration tests (61 tests)
+# Run API endpoint integration tests (75 tests)
 pytest -v tests/api/
 ```
 
@@ -234,4 +234,32 @@ pytest -v tests/api/
 - [x] **Phase 3: Demo Data & Exports**: Deterministic seeder, 16 CSV exports, SQL dump, analytics verification.
 - [x] **Phase 4: Advanced DBMS Features**: 5 views, 4 stored functions, 18 triggers, row-level locking, double-booking prevention.
 - [x] **Phase 5: Production-Style FastAPI Backend**: 16 routers, 64 endpoints, JWT authentication, RBAC, transaction service integration, Swagger docs, 97 passing tests.
-- [ ] **Phase 6: Frontend Integration**: React + TypeScript + Tailwind UI (Upcoming).
+- [x] **Phase 6: Frontend Application**: Modern React 19, TypeScript, Tailwind CSS, responsive customer, organizer, and admin dashboards, seat map reservation flow, 14 passing unit/integration tests.
+- [x] **Phase 7: Database Portal & DBMS Showcase**: Dedicated educational /database portal showcasing all 16 tables, 5 analytical views, 4 stored functions, 18 triggers, ER relationships, normalization, constraints, indexes, row-level locking concurrency, sanitized audit trail, 15 pre-crafted query cards, and secure demo exports. Backed by 14 read-only REST endpoints and zero arbitrary SQL exposure.
+
+---
+
+## 11. Database Portal & DBMS Showcase (`/database`)
+
+The EVENTHUB Database Portal is a dedicated educational and technical showcase designed for demonstrating advanced relational database design and DBMS engineering in academic presentations, vivas, and architectural reviews.
+
+- **Primary Route**: `/database`
+- **Sub-Views**:
+  - `Overview`: Real-time system catalog statistics, architectural flow, and feature metrics.
+  - `Tables`: Visual explorer for all 16 tables with schema attributes, keys, and row counts.
+  - `Relationships`: Interactive visual Entity-Relationship (ER) graph showing foreign-key hierarchies.
+  - `Views`: Live query outputs from all 5 PostgreSQL analytical views.
+  - `Functions`: Documentation and safe pre-parameterized testing of custom stored functions.
+  - `Triggers`: Visual event pipelines explaining all 18 triggers and audit functions.
+  - `Indexes`: Catalog of performance B-Tree, unique, and composite indexes.
+  - `Normalization`: Step-by-step breakdown of 1NF, 2NF, and 3NF decomposition in EVENTHUB.
+  - `Concurrency`: Visual timeline demonstrating `SELECT ... FOR UPDATE` row-level locking and 409 conflict prevention.
+  - `Queries`: 15 pre-crafted SQL queries (JOINs, Window Functions, CTEs, Aggregations) with execution outputs and 1-click SQL copy.
+  - `Concepts`: Viva/exam reference guide defining essential DBMS terms with EVENTHUB examples.
+  - `Exports`: One-click secure downloads for SQL dumps and CSV datasets.
+- **Safety Architecture**:
+  - **Zero Arbitrary SQL**: No open query consoles or raw SQL input from the frontend.
+  - **Read-Only**: Strictly `GET` requests hitting allowlisted catalog queries.
+  - **Zero Credential Exposure**: Sensitive columns (`password_hash`, tokens) are strictly stripped or masked with `[PROTECTED]`.
+
+For complete documentation, see [docs/DATABASE_PORTAL.md](docs/DATABASE_PORTAL.md).
