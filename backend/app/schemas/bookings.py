@@ -61,15 +61,13 @@ class BookingDetailResponse(BookingResponse):
 
     @classmethod
     def model_validate(cls, obj, *args, **kwargs):
-        if hasattr(obj, "event") and getattr(obj, "event", None):
-            setattr(obj, "event_title", obj.event.title)
-        booking_items_list = getattr(obj, "items", None) or getattr(obj, "booking_items", None)
-        if booking_items_list:
-            raw_items = []
+        if hasattr(obj, "__table__"):
+            event_title = obj.event.title if (hasattr(obj, "event") and obj.event) else None
+            booking_items_list = getattr(obj, "items", None) or getattr(obj, "booking_items", None) or []
+            parsed_items = []
             for itm in booking_items_list:
-
                 tt_name = itm.ticket_type.name if hasattr(itm, "ticket_type") and itm.ticket_type else None
-                raw_items.append(
+                parsed_items.append(
                     BookingItemResponse(
                         id=itm.id,
                         ticket_type_id=itm.ticket_type_id,
@@ -79,8 +77,23 @@ class BookingDetailResponse(BookingResponse):
                         subtotal=itm.subtotal,
                     )
                 )
-            setattr(obj, "items", raw_items)
-        if hasattr(obj, "tickets") and getattr(obj, "tickets", None):
-            setattr(obj, "ticket_count", len(obj.tickets))
+            tickets = getattr(obj, "tickets", None) or []
+            return cls(
+                id=obj.id,
+                user_id=obj.user_id,
+                event_id=obj.event_id,
+                event_title=event_title,
+                booking_reference=obj.booking_reference,
+                status=obj.status,
+                subtotal=obj.subtotal,
+                discount_amount=obj.discount_amount,
+                tax_amount=obj.tax_amount,
+                total_amount=obj.total_amount,
+                created_at=obj.created_at,
+                expires_at=obj.expires_at,
+                items=parsed_items,
+                ticket_count=len(tickets),
+            )
         return super().model_validate(obj, *args, **kwargs)
+
 

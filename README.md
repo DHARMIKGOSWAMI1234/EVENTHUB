@@ -236,6 +236,7 @@ pytest -v tests/api/
 - [x] **Phase 5: Production-Style FastAPI Backend**: 16 routers, 64 endpoints, JWT authentication, RBAC, transaction service integration, Swagger docs, 97 passing tests.
 - [x] **Phase 6: Frontend Application**: Modern React 19, TypeScript, Tailwind CSS, responsive customer, organizer, and admin dashboards, seat map reservation flow, 14 passing unit/integration tests.
 - [x] **Phase 7: Database Portal & DBMS Showcase**: Dedicated educational /database portal showcasing all 16 tables, 5 analytical views, 4 stored functions, 18 triggers, ER relationships, normalization, constraints, indexes, row-level locking concurrency, sanitized audit trail, 15 pre-crafted query cards, and secure demo exports. Backed by 14 read-only REST endpoints and zero arbitrary SQL exposure.
+- [x] **Phase 8: Final Integration, End-to-End QA, Bug Fixes & Demo Readiness**: Full-stack regression testing across all 111 backend tests and 23 frontend tests, verified 0 TypeScript compiler errors, production bundle build passing, resolution of SQLAlchemy relationship serialization in booking responses, zero credential leakage validation, path traversal prevention, and creation of comprehensive Final QA Report ([docs/FINAL_QA_REPORT.md](docs/FINAL_QA_REPORT.md)) and Live Demo & Viva Defense Script ([docs/EVENTHUB_DEMO_SCRIPT.md](docs/EVENTHUB_DEMO_SCRIPT.md)).
 
 ---
 
@@ -263,3 +264,22 @@ The EVENTHUB Database Portal is a dedicated educational and technical showcase d
   - **Zero Credential Exposure**: Sensitive columns (`password_hash`, tokens) are strictly stripped or masked with `[PROTECTED]`.
 
 For complete documentation, see [docs/DATABASE_PORTAL.md](docs/DATABASE_PORTAL.md).
+
+---
+
+## 12. Demo Accounts & Evaluation Quickstart
+
+All seed accounts share the default password: **`DemoUser@2026`**
+
+| Role | Email | Capabilities & Pages |
+| :--- | :--- | :--- |
+| **Customer** | `aarav.mehta@example.com` | Event booking, interactive seat maps, order history, digital tickets |
+| **Organizer** | `vikram.malhotra@example.com` | Event lifecycle (`DRAFT` → `PUBLISHED`), ticket tiers, sales analytics |
+| **Admin** | `priya.nair.admin@example.com` | Platform user governance, immutable audit logs, view reports |
+| **Academic / Public** | *No login needed* | Public catalog, event details, and the Database Portal (`/database`) |
+
+### Complete Verification Documentation
+- **Final QA & Integration Report**: [docs/FINAL_QA_REPORT.md](docs/FINAL_QA_REPORT.md)
+- **5–8 Minute Demo & Viva Defense Script**: [docs/EVENTHUB_DEMO_SCRIPT.md](docs/EVENTHUB_DEMO_SCRIPT.md)
+- **DBMS Portal Technical Reference**: [docs/DATABASE_PORTAL.md](docs/DATABASE_PORTAL.md)
+
